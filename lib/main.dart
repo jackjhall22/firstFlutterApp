@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             Question(questions[_questionIndex]),
             RaisedButton(
-              child: Text('Answer 1'),
+              child: Text('Answer 3'),
               onPressed: _answerQuestion,
             ),
             RaisedButton(
