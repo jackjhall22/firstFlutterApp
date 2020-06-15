@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
 
   void _answerQuestion() {
     setState(() {
-      _questionIndex = _questionIndex == 0 ? _questionIndex + 1 : 1;
+      _questionIndex = _questionIndex < 2 ? _questionIndex + 1 : 0;
     });
     print('Answer Chosen!');
   }
@@ -29,8 +29,23 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(context) {
     var questions = [
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
+      {
+        'questionText': 'What\'s your favorite color?',
+        'answers': ['red', 'blue', 'green', 'purple'],
+      },
+      {
+        'questionText': 'What\'s your favorite animal?',
+        'answers': [
+          'dog',
+          'cat',
+          'cow',
+          'rabbit',
+        ],
+      },
+      {
+        'questionText': 'Who\'s your favorite instructor?',
+        'answers': ['paulo', 'bob', 'jack', 'max'],
+      },
     ];
     return MaterialApp(
       home: Scaffold(
@@ -40,11 +55,12 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: <Widget>[
             Question(
-              questions[_questionIndex],
+              questions[_questionIndex]['questionText'],
             ),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList()
           ],
         ),
       ),
