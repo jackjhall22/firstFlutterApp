@@ -20,29 +20,47 @@ class _MyAppState extends State<MyApp> {
   final questions = const [
     {
       'questionText': 'What\'s your favorite color?',
-      'answers': ['red', 'blue', 'green', 'purple'],
+      'answers': [
+        {'text': 'red', 'score': 5},
+        {'text': 'blue', 'score': 2},
+        {'text': 'green', 'score': 3},
+        {'text': 'purple', 'score': 7}
+      ],
     },
     {
       'questionText': 'What\'s your favorite animal?',
       'answers': [
-        'dog',
-        'cat',
-        'cow',
-        'rabbit',
+        {'text': 'dog', 'score': 1},
+        {'text': 'cat', 'score': 10},
+        {'text': 'cow', 'score': 3},
+        {'text': 'rabbit', 'score': 5},
       ],
     },
     {
       'questionText': 'Who\'s your favorite instructor?',
-      'answers': ['paulo', 'bob', 'jack', 'max'],
+      'answers': [
+        {'text': 'paulo', 'score': 1},
+        {'text': 'bob', 'score': 5},
+        {'text': 'jack', 'score': 10},
+        {'text': 'max', 'score': 3}
+      ],
     },
   ];
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
-    print('Answer Chosen!');
+  }
+
+  void _reset() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   @override
@@ -57,7 +75,7 @@ class _MyAppState extends State<MyApp> {
                 questions: questions,
                 questionIndex: _questionIndex,
                 answerQuestion: _answerQuestion)
-            : Result(),
+            : Result(_totalScore, _reset),
       ),
     );
   }
